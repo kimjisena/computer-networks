@@ -16,13 +16,18 @@ def request_handler (sock: socket):
     filename = msg.split()[1]
     fhandle = open(filename[1:])
     fcontent = fhandle.readlines()
+    fhandle.close()
     # send http header line
     conn.send('HTTP/1.1 200 OK\r\n'.encode())
     conn.send('\r\n'.encode())
     # send file content line by line
-    for i in range(0, len(fcontent)):
-      conn.send(fcontent[i].encode())
-    conn.send('\r\n'.encode())
+    try:
+      for i in range(0, len(fcontent)):
+        conn.send(fcontent[i].encode())
+    except ConnectionResetError:
+      pass
+    finally:
+      conn.send('\r\n'.encode())
     # good job, now close connection
     conn.close()
   except IOError as err:
