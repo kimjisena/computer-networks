@@ -4,7 +4,7 @@ import unittest
 from client import client
 
 HOST = 'localhost'
-PORT = 12001
+PORT = 12000
 
 class WebServerTestCase (unittest.TestCase):
   def testResponseOK (self):

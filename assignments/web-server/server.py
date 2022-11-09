@@ -4,7 +4,7 @@ from socket import socket, AF_INET, SOCK_STREAM
 import sys
 
 HOST = 'localhost'
-PORT = 12001
+PORT = 12000
 
 def server ():
   # prep socket
@@ -39,8 +39,7 @@ def server ():
       conn.send('\r\n'.encode())
       conn.close()
     finally:
-      pass
-      #sock.close()
-      #sys.exit()
+      sock.close()
+      sys.exit()
 
 server()
