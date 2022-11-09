@@ -1,10 +1,15 @@
 from socket import socket, AF_INET, SOCK_DGRAM
+import sys
 
 serverName = 'localhost'
-serverPort = 12000
-clientSocket = socket(AF_INET, SOCK_DGRAM)
-message = input('Input lowercase sentence: ')
-clientSocket.sendto(message.encode(), (serverName, serverPort))
-modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
-print(modifiedMessage.decode())
-clientSocket.close()
+serverPort = 12002
+
+def client(message: str) -> str:
+  clientSocket = socket(AF_INET, SOCK_DGRAM)
+  clientSocket.sendto(message.encode(), (serverName, serverPort))
+  modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+  clientSocket.close()
+  return modifiedMessage.decode()
+
+if __name__ == 'main':
+  client(sys.argv[1])
